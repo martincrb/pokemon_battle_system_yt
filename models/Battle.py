@@ -46,7 +46,7 @@ class Battle:
         aux = ((2*pokemon1.level)/5) + 2
         powerFactor = aux * attack.power
         if attack.category == PHYSICAL:
-            print("Physical attack!")
+            print("Physical attack!", pokemon1.stats)
             powerFactor *= (pokemon1.stats[ATTACK]/pokemon2.stats[DEFENSE])
         else:
             powerFactor *= (pokemon1.stats[SPATTACK]/pokemon2.stats[SPDEFENSE])
