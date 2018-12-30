@@ -35,7 +35,12 @@ class Battle:
 
         # Execute attacks
         self.pokemon2.current_hp -= self.compute_damage(attack1, self.pokemon1, self.pokemon2)
-        self.pokemon1.current_hp -= self.compute_damage(attack2, self.pokemon2, self.pokemon1)
+        if (self.pokemon2.current_hp > 0):
+            self.pokemon1.current_hp -= self.compute_damage(attack2, self.pokemon2, self.pokemon1)
+
+        self.pokemon2.current_hp = max(0, self.pokemon2.current_hp)
+        self.pokemon1.current_hp = max(0, self.pokemon1.current_hp)
+
         self.actual_turn += 1
 
     def print_current_status(self):
@@ -50,9 +55,12 @@ class Battle:
             powerFactor *= (pokemon1.stats[ATTACK]/pokemon2.stats[DEFENSE])
         else:
             powerFactor *= (pokemon1.stats[SPATTACK]/pokemon2.stats[SPDEFENSE])
-        damage_without_modifier = powerFactor/50 + 2
+        #print("POWER FACTOR", powerFactor)
+        damage_without_modifier = float(powerFactor)/50 + 2
+        #print("DAMAGE NO MODIFIERS", damage_without_modifier)
+        #print("DAMAGE MODIFIER", self.compute_damage_modifier(attack, self.pokemon1, self.pokemon2))
         finalDamage = damage_without_modifier * self.compute_damage_modifier(attack, self.pokemon1, self.pokemon2)
-        print(finalDamage)
+        print("FINAL DAMAGE", finalDamage, pokemon1.name, "to", pokemon2.name)
         return finalDamage
 
     def compute_damage_modifier(self, attack, pokemon1, pokemon2):
@@ -63,7 +71,9 @@ class Battle:
             stab = 1.5
         #Compute Type effectiveness
         effectiveness1 = TYPE_CHART[pokemon2.type1][attack.type]
-        effectiveness2 = TYPE_CHART[pokemon2.type2][attack.type]
+        effectiveness2 = 1
+        if pokemon2.type2:
+            effectiveness2 = TYPE_CHART[pokemon2.type2][attack.type]
         effectiveness_final = effectiveness1 * effectiveness2
         
         #Compute Critical
