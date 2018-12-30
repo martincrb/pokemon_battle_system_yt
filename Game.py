@@ -5,10 +5,12 @@ from constants import *
 from models.Battle import *
 from models.Pokemon import *
 from models.Button import Button
+from models.Menu import Menu
 
 class Game:
     def __init__(self):
         self.buttons = []
+        self.menu = Menu()
         pygame.init()
 
         self.screen = pygame.display.set_mode((160*4, 144*4))
@@ -57,10 +59,10 @@ class Game:
         pokemon_name = pokemon.name.lower()
         if isPlayer:
             pokemon_img = pygame.image.load('res/pokemon/'+pokemon_name+"_back.png")
-            pokemon_img = pygame.transform.scale(pokemon_img, (200, 200))
+            pokemon_img = pygame.transform.scale(pokemon_img, (300, 300))
             pokemon.renderer = pokemon_img
         else:
-            pokemon_img = pygame.image.load('res/pokemon/'+pokemon_name+"_front.png")
+            pokemon_img = pygame.image.load('res/pokemon/'+pokemon_name+".png")
             pokemon_img = pygame.transform.scale(pokemon_img, (200, 200))
 
             pokemon.renderer = pokemon_img
@@ -133,6 +135,7 @@ class Game:
         self.pokemon2.render(self.screen, (440, 0))
 
     def renderButtons(self):
+        self.menu.render(self)
         for button in self.buttons:
             button.render(self)
     

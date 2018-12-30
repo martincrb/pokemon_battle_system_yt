@@ -38,4 +38,4 @@ for row in pokemonRows[1:]:
         pokemonDict[name]["type2"] = typesArray[1]
     
 with open('db/pokemons.json', 'w') as outfile:
-    json.dump(pokemonDict, outfile)
+    json.dump(pokemonDict, outfile)epidemix
